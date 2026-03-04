@@ -1,0 +1,251 @@
+/* ============================================================
+   ARCANE TETRIS — styles.css
+   Fully responsive · Arcane teal · Dark fantasy
+============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  background: #020a0f;
+  color: #c8e8e0;
+  font-family: 'Share Tech Mono', monospace;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ── Background ── */
+.bg-orbs { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.bg-orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(100px); opacity: 0.15;
+  animation: orb-drift 18s ease-in-out infinite alternate;
+}
+.orb-1 { width: 500px; height: 500px; background: #00ffc8; top: -100px; left: -100px; }
+.orb-2 { width: 400px; height: 400px; background: #0044ff; bottom: -80px; right: -80px; animation-duration: 22s; }
+@keyframes orb-drift { from{transform:translate(0,0);} to{transform:translate(30px,-25px);} }
+
+.bg-grid {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(0,255,200,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,200,0.018) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── Back link ── */
+.back-link {
+  position: fixed; top: 0.9rem; left: 1rem; z-index: 100;
+  font-size: 0.68rem; letter-spacing: 0.12em;
+  color: rgba(0,255,200,0.4); text-decoration: none; transition: color .2s;
+}
+.back-link:hover { color: #00ffc8; }
+
+/* ── Overlays ── */
+.overlay {
+  position: fixed; inset: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,5,10,0.88); backdrop-filter: blur(8px);
+}
+.overlay.hidden { display: none; }
+
+.overlay-panel {
+  background: rgba(4,15,20,0.97);
+  border: 1px solid rgba(0,255,200,0.25);
+  border-radius: 16px; padding: 2.5rem 2rem;
+  max-width: 400px; width: 90%;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(0,255,200,0.08);
+  animation: panel-in .3s ease-out;
+}
+.overlay-panel.small { max-width: 320px; padding: 2rem 1.5rem; }
+@keyframes panel-in { from{opacity:0;transform:translateY(12px);} to{opacity:1;transform:none;} }
+.overlay-panel::before {
+  content:''; display:block; height:2px;
+  background: linear-gradient(90deg,transparent,rgba(0,255,200,0.5),transparent);
+  margin-bottom: 1.5rem; border-radius: 2px;
+}
+
+.overlay-runes {
+  display: flex; justify-content: center; gap: 1.2rem;
+  margin-bottom: 1rem;
+  font-size: 1.4rem; color: rgba(0,255,200,0.5);
+  animation: rune-pulse 3s ease-in-out infinite;
+}
+@keyframes rune-pulse { 0%,100%{opacity:.4;} 50%{opacity:.9;} }
+
+.overlay-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2rem; font-weight: 700;
+  color: #00ffc8;
+  text-shadow: 0 0 20px rgba(0,255,200,0.4);
+  margin-bottom: 0.5rem;
+}
+.overlay-sub {
+  font-size: 0.85rem; color: rgba(200,232,224,0.6);
+  margin-bottom: 1.5rem; line-height: 1.6;
+  font-style: italic;
+}
+
+.btn-primary {
+  font-family: 'Orbitron', monospace; font-size: 0.75rem;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  background: rgba(0,255,200,0.15);
+  border: 1px solid rgba(0,255,200,0.5);
+  color: #00ffc8; padding: 0.8rem 2rem; border-radius: 8px;
+  cursor: pointer; transition: all .2s; display: block; width: 100%;
+  margin-bottom: 0.75rem;
+}
+.btn-primary:hover { background: rgba(0,255,200,0.25); box-shadow: 0 0 20px rgba(0,255,200,0.3); }
+
+.btn-secondary {
+  font-family: 'Orbitron', monospace; font-size: 0.7rem;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(200,232,224,0.6); padding: 0.7rem 1.5rem; border-radius: 8px;
+  cursor: pointer; transition: all .2s; display: block; width: 100%;
+}
+.btn-secondary:hover { background: rgba(255,80,80,0.1); border-color: rgba(255,80,80,0.3); color: #ff8080; }
+
+.overlay-btns { display: flex; flex-direction: column; gap: 0.6rem; margin-top: 1rem; }
+
+.controls-hint {
+  margin-top: 1.2rem; font-size: 0.68rem;
+  letter-spacing: 0.06em; color: rgba(0,255,200,0.35);
+  display: flex; flex-direction: column; gap: 0.3rem;
+  border-top: 1px solid rgba(0,255,200,0.08);
+  padding-top: 1rem;
+}
+
+/* ── Game Over stats ── */
+.go-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.75rem; margin: 1rem 0;
+}
+.go-stat {
+  background: rgba(0,255,200,0.04);
+  border: 1px solid rgba(0,255,200,0.12);
+  border-radius: 8px; padding: 0.6rem;
+  display: flex; flex-direction: column; gap: 0.2rem;
+}
+.go-label {
+  font-size: 0.55rem; letter-spacing: 0.2em;
+  color: rgba(0,255,200,0.45); text-transform: uppercase;
+}
+.go-val {
+  font-family: 'Orbitron', monospace; font-size: 1.1rem;
+  font-weight: 700; color: #00ffc8;
+}
+
+/* ── Game layout ── */
+.game-layout {
+  position: relative; z-index: 1;
+  display: flex; align-items: flex-start;
+  justify-content: center; gap: 1rem;
+  padding: 0.5rem;
+}
+
+/* ── Canvas ── */
+.canvas-wrap {
+  position: relative;
+  border: 1px solid rgba(0,255,200,0.25);
+  border-radius: 4px;
+  box-shadow: 0 0 30px rgba(0,255,200,0.1), inset 0 0 20px rgba(0,0,0,0.5);
+}
+#gameCanvas { display: block; background: #030d12; }
+
+/* ── HUD panels ── */
+.hud {
+  display: flex; flex-direction: column; gap: 0.75rem;
+  min-width: 90px;
+}
+.hud-left { align-items: flex-end; }
+.hud-right { align-items: flex-start; }
+
+.hud-block {
+  background: rgba(0,15,20,0.7);
+  border: 1px solid rgba(0,255,200,0.1);
+  border-radius: 8px; padding: 0.5rem 0.75rem;
+  min-width: 88px; text-align: center;
+}
+.hud-label {
+  font-size: 0.52rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: rgba(0,255,200,0.4);
+  margin-bottom: 0.2rem;
+}
+.hud-val {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 700; color: #00ffc8;
+  text-shadow: 0 0 8px rgba(0,255,200,0.4);
+}
+
+#nextCanvas, #holdCanvas {
+  display: block; background: rgba(0,0,0,0.3);
+  border-radius: 4px; margin: 0.25rem auto 0;
+  border: 1px solid rgba(0,255,200,0.08);
+}
+
+.hud-btns {
+  display: flex; flex-direction: column; gap: 0.4rem; margin-top: 0.25rem;
+}
+.btn-hud {
+  font-family: 'Orbitron', monospace; font-size: 0.58rem;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  background: rgba(0,255,200,0.06);
+  border: 1px solid rgba(0,255,200,0.2);
+  color: rgba(0,255,200,0.7); padding: 0.45rem 0.6rem;
+  border-radius: 6px; cursor: pointer; transition: all .2s;
+  min-width: 88px;
+}
+.btn-hud:hover { background: rgba(0,255,200,0.15); }
+.btn-hud-quit { border-color: rgba(255,80,80,0.2); color: rgba(255,120,120,0.7); }
+.btn-hud-quit:hover { background: rgba(255,80,80,0.1); }
+
+/* ── Touch controls ── */
+.touch-row {
+  position: relative; z-index: 10;
+  display: none;
+  gap: 0.4rem; padding: 0.5rem;
+  margin-top: 0.5rem;
+}
+@media (pointer:coarse)  { .touch-row { display: flex; } }
+@media (max-width:600px) { .touch-row { display: flex; } }
+
+.t-btn {
+  font-size: 1rem; width: 52px; height: 44px;
+  background: rgba(0,255,200,0.07);
+  border: 1px solid rgba(0,255,200,0.25);
+  color: #00ffc8; border-radius: 8px; cursor: pointer;
+  transition: all .15s; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  display: flex; align-items: center; justify-content: center;
+}
+.t-btn:active, .t-btn.pressed {
+  background: rgba(0,255,200,0.22);
+  box-shadow: 0 0 12px rgba(0,255,200,0.3);
+}
+.t-rotate { background: rgba(157,127,255,0.1); border-color: rgba(157,127,255,0.3); color: #9d7fff; }
+.t-drop   { background: rgba(255,80,80,0.1);   border-color: rgba(255,80,80,0.3);   color: #ff6060; }
+
+/* ── Line clear flash ── */
+.canvas-wrap.flash { animation: line-flash .15s ease-out; }
+@keyframes line-flash { 0%{box-shadow:0 0 40px rgba(0,255,200,0.8);} 100%{box-shadow:0 0 30px rgba(0,255,200,0.1);} }
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .game-layout { gap: 0.5rem; }
+  .hud { min-width: 70px; }
+  .hud-block { min-width: 68px; padding: 0.4rem 0.5rem; }
+  .btn-hud { min-width: 68px; font-size: 0.52rem; }
+  #nextCanvas, #holdCanvas { width: 72px !important; height: 72px !important; }
+}
+@media (max-width: 480px) {
+  .hud-left { display: none; }
+  .game-layout { gap: 0.4rem; }
+}
